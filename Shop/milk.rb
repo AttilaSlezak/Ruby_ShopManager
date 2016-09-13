@@ -18,7 +18,7 @@ class Milk
   def to_s
     'Milk{' + \
       'cubicCapacity: ' + @cubic_capacity.to_s + ' ml' + \
-      ', producer: ' + @producer + \
+      ', producer: \'' + @producer + '\'' + \
       ', bestBefore: ' + @best_before.to_s + \
       ', fatContent: ' + @fat_content.to_s + \
       ', price: ' + @price.to_s + ' forint(s)' + '}'
