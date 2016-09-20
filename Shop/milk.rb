@@ -2,25 +2,23 @@ require 'date'
 
 class Milk
 
-  attr_reader :bar_code, :producer, :best_before, :fat_content, :price, :cubic_capacity, :LITER, :HALF_LITER, \
-    :GLASS, :WHOLE_MILK, :LOW_FAT_MILK
+  attr_reader :bar_code, :producer, :best_before, :fat_content, :cubic_capacity
 
-  @@LITER = 1000
-  @@HALF_LITER = 500
-  @@GLASS = 200
-  @@WHOLE_MILK = 2.8
-  @@LOW_FAT_MILK = 1.5
+  LITER = 1000
+  HALF_LITER = 500
+  GLASS = 200
+  WHOLE_MILK = 2.8
+  LOW_FAT_MILK = 1.5
 
-  def initialize(bar_code, cubic_capacity, producer, best_before, fat_content, price)
+  def initialize(bar_code, cubic_capacity, producer, best_before, fat_content)
     raise ArgumentError, 'Given data cannot represent real Milk!' \
-      unless Milk.check_data_can_represent_real_milk(bar_code, cubic_capacity, producer, best_before, fat_content, price)
+      unless Milk.check_data_can_represent_real_milk(bar_code, cubic_capacity, producer, best_before, fat_content)
 
     @bar_code = bar_code
     @cubic_capacity = cubic_capacity
     @producer = producer
     @best_before = best_before
     @fat_content = fat_content
-    @price = price
   end
 
   def to_s
@@ -29,11 +27,10 @@ class Milk
       ', cubic capacity: ' + @cubic_capacity.to_s + ' ml' + \
       ', producer: \'' + @producer + '\'' + \
       ', best before: ' + @best_before.to_s + \
-      ', fat content: ' + @fat_content.to_s + \
-      ', price: ' + @price.to_s + ' forint(s)' + '}'
+      ', fat content: ' + @fat_content.to_s + '}'
   end
 
-  def self.check_data_can_represent_real_milk(bar_code, cubic_capacity, producer, best_before, fat_content, price)
+  def self.check_data_can_represent_real_milk(bar_code, cubic_capacity, producer, best_before, fat_content)
     if !(bar_code.is_a? Integer)
       puts "'bar_code' must be integer type"
       return false
@@ -48,9 +45,6 @@ class Milk
       return false
     elsif !(fat_content.is_a? Float)
       puts "'fat_content' must be float type!"
-      return false
-    elsif !(price.is_a? Integer)
-      puts "'price' must be integer type!"
       return false
     end
     return true
