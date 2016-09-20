@@ -31,7 +31,7 @@ class Shop
   end
 
   def is_there_any_milk()
-    @milk_counter.lenth > 0
+    @milk_counter.length > 0
   end
 
   def fill_up_milk_counter(milk)
@@ -61,7 +61,7 @@ class Shop
 
     def initialize(milk, quantity, price)
       raise ArgumentError, 'Given data cannot represent a real ShopRegistration!' \
-        unless Shop.check_data_can_represent_real_shop_registration(milk, quantity, price)
+        unless ShopRegistration.check_data_can_represent_real_shop_registration(milk, quantity, price)
 
       @milk = milk
       @quantity = quantity

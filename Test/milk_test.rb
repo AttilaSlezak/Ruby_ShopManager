@@ -7,7 +7,7 @@ class MyTest < Test::Unit::TestCase
   @@test_date = Date.today + 1
 
   def setup
-    @@test_milk = Milk.new(101, Milk::LITER, 'Plain Milk inc.', @@test_date, 2.8)
+    @@test_milk = Milk.new(101, Milk::LITER, 'Plain Milk inc.', @@test_date, Milk::WHOLE_MILK)
   end
 
   def teardown
@@ -32,7 +32,7 @@ class MyTest < Test::Unit::TestCase
 
   def test_incorrect_data_to_initialize_milk
     assert_raise ArgumentError do
-      Milk.new(101, 1000, 'Plain Milk inc.', Date.strptime('2017-01-01', '%Y-%m-%d'), 28)
+      Milk.new(101, Milk::LITER, 'Plain Milk inc.', Date.strptime('2017-01-01', '%Y-%m-%d'), 28)
     end
   end
 
