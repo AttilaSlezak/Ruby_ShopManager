@@ -2,12 +2,20 @@ require 'date'
 
 class Milk
 
-  attr_reader :producer, :best_before, :fat_content, :price, :cubic_capacity
+  attr_reader :bar_code, :producer, :best_before, :fat_content, :price, :cubic_capacity, :LITER, :HALF_LITER, \
+    :GLASS, :WHOLE_MILK, :LOW_FAT_MILK
 
-  def initialize(cubic_capacity, producer, best_before, fat_content, price)
+  @@LITER = 1000
+  @@HALF_LITER = 500
+  @@GLASS = 200
+  @@WHOLE_MILK = 2.8
+  @@LOW_FAT_MILK = 1.5
+
+  def initialize(bar_code, cubic_capacity, producer, best_before, fat_content, price)
     raise ArgumentError, 'Given data cannot represent real Milk!' \
-      unless Milk.check_data_can_represent_real_milk(cubic_capacity, producer, best_before, fat_content, price)
+      unless Milk.check_data_can_represent_real_milk(bar_code, cubic_capacity, producer, best_before, fat_content, price)
 
+    @bar_code = bar_code
     @cubic_capacity = cubic_capacity
     @producer = producer
     @best_before = best_before
@@ -17,15 +25,19 @@ class Milk
 
   def to_s
     'Milk{' + \
-      'cubicCapacity: ' + @cubic_capacity.to_s + ' ml' + \
+      'bar code: ' + @bar_code +
+      ', cubic capacity: ' + @cubic_capacity.to_s + ' ml' + \
       ', producer: \'' + @producer + '\'' + \
-      ', bestBefore: ' + @best_before.to_s + \
-      ', fatContent: ' + @fat_content.to_s + \
+      ', best before: ' + @best_before.to_s + \
+      ', fat content: ' + @fat_content.to_s + \
       ', price: ' + @price.to_s + ' forint(s)' + '}'
   end
 
-  def self.check_data_can_represent_real_milk(cubic_capacity, producer, best_before, fat_content, price)
-    if !(cubic_capacity.is_a? Integer)
+  def self.check_data_can_represent_real_milk(bar_code, cubic_capacity, producer, best_before, fat_content, price)
+    if !(bar_code.is_a? Integer)
+      puts "'bar_code' must be integer type"
+      return false
+    elsif !(cubic_capacity.is_a? Integer)
       puts "'cubic_capacity' must be integer type!"
       return false
     elsif !(producer.is_a? String)
@@ -47,5 +59,4 @@ class Milk
   def check_still_under_guarantee
     @best_before >= Date.today ? true : false
   end
-
 end

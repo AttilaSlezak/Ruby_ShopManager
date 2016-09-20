@@ -11,7 +11,6 @@ class Shop
     @address = address
     @owner = owner
     @milk_counter = milk_counter
-    @flag = milk_counter.length - 1
   end
 
   def self.check_data_can_represent_real_shop(name, address, owner, milk_counter)
@@ -37,12 +36,10 @@ class Shop
 
   def fill_up_milk_counter(milk)
     if !(milk.is_a? Milk) then return false end
-    @flag += 1
-    @milk_counter[@flag] = milk
+    @milk_counter[milk.bar_code] = milk
   end
 
-  def buy_milk(milk)
-    @flag -= 1
-    @milk_counter.delete(@flag + 1)
+  def buy_milk(bar_code)
+    return @milk_counter.delete(bar_code)
   end
 end
