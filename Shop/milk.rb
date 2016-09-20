@@ -23,7 +23,7 @@ class Milk
 
   def to_s
     'Milk{' + \
-      'bar code: ' + @bar_code +
+      'bar code: ' + @bar_code.to_s +
       ', cubic capacity: ' + @cubic_capacity.to_s + ' ml' + \
       ', producer: \'' + @producer + '\'' + \
       ', best before: ' + @best_before.to_s + \
