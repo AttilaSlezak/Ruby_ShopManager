@@ -3,7 +3,7 @@ class Shop
 
   attr_reader :name, :address, :owner
 
-  def initialize(name, address, owner, milk_counter)
+  def initialize(name, address, owner, milk_counter = {})
     raise ArgumentError, 'Given data cannot represent a real Shop!' \
       unless Shop.check_data_can_represent_real_shop(name, address, owner, milk_counter)
 
@@ -24,8 +24,8 @@ class Shop
     elsif !(owner.is_a? String)
       puts "'owner' must be string type!"
       return false
-    elsif !(milk_counter.is_a? Array)
-      puts "'milk_counter' must be array type!"
+    elsif !(milk_counter.is_a? Hash)
+      puts "'milk_counter' must be hash type!"
       return false
     end
     return true
@@ -35,8 +35,14 @@ class Shop
     @milk_counter.lenth > 0
   end
 
+  def fill_up_milk_counter(milk)
+    if !(milk.is_a? Milk) then return false end
+    @flag += 1
+    @milk_counter[@flag] = milk
+  end
+
   def buy_milk(milk)
     @flag -= 1
-    @milk_counter[@flag + 1]
+    @milk_counter.delete(@flag + 1)
   end
 end
