@@ -5,8 +5,8 @@ class Milk
   attr_reader :producer, :best_before, :fat_content, :price, :cubic_capacity
 
   def initialize(cubic_capacity, producer, best_before, fat_content, price)
-    raise ArgumentError, 'Given data cannot represent real Milk!' unless \
-      Milk.check_data_can_represent_real_milk(cubic_capacity, producer, best_before, fat_content, price)
+    raise ArgumentError, 'Given data cannot represent real Milk!' \
+      unless Milk.check_data_can_represent_real_milk(cubic_capacity, producer, best_before, fat_content, price)
 
     @cubic_capacity = cubic_capacity
     @producer = producer
