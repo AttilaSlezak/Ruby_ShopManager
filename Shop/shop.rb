@@ -105,4 +105,5 @@ class Shop
       @quantity -= quantity
     end
   end
+  private_constant :ShopRegistration
 end
