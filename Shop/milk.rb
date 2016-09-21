@@ -2,7 +2,7 @@ require 'date'
 
 class Milk
 
-  attr_reader :bar_code, :producer, :best_before, :fat_content, :cubic_capacity
+  attr_reader :barcode, :producer, :best_before, :fat_content, :cubic_capacity
 
   LITER = 1000
   HALF_LITER = 500
@@ -10,11 +10,11 @@ class Milk
   WHOLE_MILK = 2.8
   LOW_FAT_MILK = 1.5
 
-  def initialize(bar_code, cubic_capacity, producer, best_before, fat_content)
+  def initialize(barcode, cubic_capacity, producer, best_before, fat_content)
     raise ArgumentError, 'Given data cannot represent real Milk!' \
-      unless Milk.check_data_can_represent_real_milk(bar_code, cubic_capacity, producer, best_before, fat_content)
+      unless Milk.check_data_represent_real_milk(barcode, cubic_capacity, producer, best_before, fat_content)
 
-    @bar_code = bar_code
+    @barcode = barcode
     @cubic_capacity = cubic_capacity
     @producer = producer
     @best_before = best_before
@@ -23,16 +23,16 @@ class Milk
 
   def to_s
     'Milk{' + \
-      'bar code: ' + @bar_code.to_s +
+      'barcode: ' + @barcode.to_s +
       ', cubic capacity: ' + @cubic_capacity.to_s + ' ml' + \
       ', producer: \'' + @producer + '\'' + \
       ', best before: ' + @best_before.to_s + \
       ', fat content: ' + @fat_content.to_s + '}'
   end
 
-  def self.check_data_can_represent_real_milk(bar_code, cubic_capacity, producer, best_before, fat_content)
-    if !(bar_code.is_a? Integer)
-      puts "'bar_code' must be integer type"
+  def self.check_data_represent_real_milk(barcode, cubic_capacity, producer, best_before, fat_content)
+    if !(barcode.is_a? Integer)
+      puts "'barcode' must be integer type!"
       return false
     elsif !(cubic_capacity.is_a? Integer)
       puts "'cubic_capacity' must be integer type!"

@@ -5,7 +5,7 @@ class Shop
 
   def initialize(name, address, owner, milk_counter = {})
     raise ArgumentError, 'Given data cannot represent a real Shop!' \
-      unless Shop.check_data_can_represent_real_shop(name, address, owner, milk_counter)
+      unless Shop.check_data_represent_real_shop(name, address, owner, milk_counter)
 
     @name = name
     @address = address
@@ -13,7 +13,7 @@ class Shop
     @milk_counter = milk_counter
   end
 
-  def self.check_data_can_represent_real_shop(name, address, owner, milk_counter)
+  def self.check_data_represent_real_shop(name, address, owner, milk_counter)
     if !(name.is_a? String)
       puts "'name' must be string type!"
       return false
@@ -30,45 +30,45 @@ class Shop
     return true
   end
 
-  def is_there_any_milk()
+  def is_there_any_milk
     @milk_counter.length > 0
   end
 
-  def fill_up_milk_counter(milk)
-    unless milk.is_a? Milk then return false end
+  def replenish_milk_counter(milk)
+    return false unless milk.is_a? Milk
 
-    shop_reg = @milk_counter[milk.bar_code]
+    shop_reg = @milk_counter[milk.barcode]
     if shop_reg.nil?
-      shop_reg = ShopRegistration.new(milk, 1, 100)
-      @milk_counter[milk.bar_code] = shop_reg
+      shop_reg = ShopRegister.new(milk, 1, 100)
+      @milk_counter[milk.barcode] = shop_reg
     else
       shop_reg.add_quantity(1)
     end
   end
 
-  def buy_milk(bar_code)
-    shop_reg = @milk_counter[bar_code]
+  def buy_milk(barcode)
+    shop_reg = @milk_counter[barcode]
     unless shop_reg.nil?
       shop_reg.subtract_quantity(1)
       return shop_reg.milk
     end
-    return nil
+    nil
   end
 
-  class ShopRegistration
+  class ShopRegister
 
     attr_reader :milk, :quantity, :price
 
     def initialize(milk, quantity, price)
       raise ArgumentError, 'Given data cannot represent a real ShopRegistration!' \
-        unless ShopRegistration.check_data_can_represent_real_shop_registration(milk, quantity, price)
+        unless ShopRegister.check_data_represent_real_shop_register(milk, quantity, price)
 
       @milk = milk
       @quantity = quantity
       @price = price
     end
 
-    def self.check_data_can_represent_real_shop_registration(milk, quantity, price)
+    def self.check_data_represent_real_shop_register(milk, quantity, price)
       if !(milk.is_a? Milk)
         puts "'milk' must be Milk type!"
         return false
@@ -83,17 +83,17 @@ class Shop
     end
 
     def milk=(milk)
-      if !(milk.is_a? Milk) then return false end
+      return false unless milk.is_a? Milk
       @milk = milk
     end
 
     def quantity=(quantity)
-      if !(quantity.is_a? Integer) then return false end
+      return false unless quantity.is_a? Integer
       @quantity = quantity
     end
 
     def price=(price)
-      if !(price.is_a? Integer) then return false end
+      return false unless price.is_a? Integer
       @price = price
     end
 
@@ -105,5 +105,5 @@ class Shop
       @quantity -= quantity
     end
   end
-  private_constant :ShopRegistration
+  private_constant :ShopRegister
 end
